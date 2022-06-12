@@ -1,0 +1,33 @@
+No database selected
+mysql> use dbecommerce;
+
+
+create table Product_Detail(ProdID int primary key, ProdName varchar(50), Price Decimal(7,2), AvailItems int, Picture blob, Size varchar(50), Entry_date timestamp, Expiry_Date timestamp, SalePrice decimal(7,2), Discount varchar(50));
+
+
+
+STR_TO_DATE('yourDateTimeValue','%d/%m/%Y %H:%i:%s') --- Remember
+
+
+LOAD_FILE has many conditions attached to it. From the MySQL documentation:
+
+    LOAD_FILE(file_name)
+
+    Reads the file and returns the file contents as a string. To use this function, the file must be located on the server host, you must specify the full path name to the file, and you must have the FILE privilege. The file must be readable by all and its size less than max_allowed_packet bytes. If the secure_file_priv system variable is set to a nonempty directory name, the file to be loaded must be located in that directory.
+
+    If the file does not exist or cannot be read because one of the preceding conditions is not satisfied, the function returns NULL.
+
+
+
+
+insert into Product_Detail (ProdID, ProdName, Price, AvailItems, Picture, Size, Entry_date, Expiry_Date, SalePrice, Discount) values (1001, 'Hero Blast', 6000, 5, LOAD_File ('C:/Jatin-project/images/heroblast.png'), 'small', STR_TO_DATE('01-12-2019','%d-%m-%Y'), STR_TO_DATE('01-12-2021','%d-%m-%Y'),7500, 'NA');
+
+INSERT INTO myimagetable (image_name, myimage) VALUES ('myimage.jpg', LOAD_FILE('images/myimage.jpg'));
+
+
+
+SELECT myimage INTO DUMPFILE 'images/myimage.jpg' FROM myimagetable WHERE image_name = 'myimage.jpg';
+
+
+Delete from prodcut_detail;
+drop table prodcut_detail;
